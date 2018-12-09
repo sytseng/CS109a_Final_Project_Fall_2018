@@ -1,5 +1,7 @@
 ---
 title: The Case of the Italian Olives
+notebook:
+nav_include: 0
 ---
 
 This is the home page Liam Corrigan
