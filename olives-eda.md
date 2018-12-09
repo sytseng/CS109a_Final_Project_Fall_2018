@@ -1,14 +1,9 @@
 ---
-title: EDA
-notebook: olives-eda.ipynb
+title: Models
+notebook: olives-model.ipynb
 nav_include: 1
 ---
-
-## Contents
-{:.no_toc}
-*  
-{: toc}
-
+# EDA
 
 
 
