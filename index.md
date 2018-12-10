@@ -2,7 +2,7 @@
 title: Spotify Playlists Recommender
 ---
 
-This is the home page
+Spotify Test Homepage
 
 ## Lets have fun
 
