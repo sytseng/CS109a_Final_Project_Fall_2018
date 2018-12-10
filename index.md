@@ -1,7 +1,5 @@
 ---
-title: The Case of the Italian Olives
-notebook:
-nav_include: 0
+title: Spotify Playlists Recommender
 ---
 
 This is the home page
