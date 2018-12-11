@@ -1,5 +1,5 @@
 ---
-title: Milestone 3
+title: Milestone 3 test
 notebook: Milestone_3.ipynb
 nav_include: 3
 ---
