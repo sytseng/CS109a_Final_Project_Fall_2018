@@ -1,6 +1,6 @@
 theme: jekyll-theme-primer
-title: Spotify Index Page
-description: Keeping Italian Olives Pure!
+title: Project Description
+description: Spotify Playlist Recommender Proect
 baseurl:
 markdown: kramdown
 kramdown:
