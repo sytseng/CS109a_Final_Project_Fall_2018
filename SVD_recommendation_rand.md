@@ -1,8 +1,3 @@
----
-title: SVD Recommendation Systems
-notebook: SVD_recommendation_rand.ipynb
-nav_include: 1
----
 
 # Matrix factorization and song recommendation
 ***
@@ -10,7 +5,7 @@ A common approach for collaborative filtering is matrix factorization, where we 
 ***
 First we load all the libraries.
 
-## Load data
+## Load data 
 
 ***
 Here we loaded the sparse matrix containing track-playlist contingency.
@@ -68,7 +63,7 @@ This function calculated the Jaccard index between a pair of tracks.
 
 
 ```python
-# use SVD in scipy
+# use SVD in scipy 
 n_comps = 500
 u, s, vt = svds(sps_acc, k=n_comps)
 ```
@@ -99,8 +94,8 @@ print('Shape of u =', u.shape,
 ```
 
 
-    Shape of u = (171381, 500)
-    Shape of sv_mat =  (500, 500)
+    Shape of u = (171381, 500) 
+    Shape of sv_mat =  (500, 500) 
     Shape of vt = (500, 10000)
 
 
@@ -127,7 +122,7 @@ if real.shape[0] > 50:
 # select rec
 rec = rec_ind[:num_rec]
 # randomly pick num_rec as not-rec, but not the ones that are rec
-not_rec = rec_ind[np.random.choice(rec_ind.shape[0]-num_rec, num_rec, replace=False)+num_rec]
+not_rec = rec_ind[np.random.choice(rec_ind.shape[0]-num_rec, num_rec, replace=False)+num_rec] 
 
 # calculate the pair number
 pair_num = real.shape[0]*num_rec
@@ -147,7 +142,7 @@ not_rec_real_jac = [get_jaccard(sps_acc,i) for i in not_rec_real_pairs]
 # random pairs
 rand_pair_num = 100
 rand_id = list(np.random.choice(n_tracks, 2*rand_pair_num))
-rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num]
+rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num] 
               for tr2 in rand_id[rand_pair_num+1:] if tr1<tr2]
 rand_jac = [get_jaccard(sps_acc,i) for i in rand_pairs]
 
@@ -159,9 +154,9 @@ print('Mean Jaccard index\n rec vs. real =',np.mean(rec_real_jac),
 
 
     Mean Jaccard index
-     rec vs. real = 0.009245493911145377
-     btw real = 0.11331664265473237
-     not_rec vs. real 0.00019028172967485926
+     rec vs. real = 0.009245493911145377 
+     btw real = 0.11331664265473237 
+     not_rec vs. real 0.00019028172967485926 
      random pair 0.00018542653802965727
 
 
@@ -184,9 +179,9 @@ We can visualize the distribution of Jaccard index of 4 groups by plotting their
 ***
 We can scale up our recommendation to 100 randomly selected playlists and look at the statistics of the Jaccard index of each group.
 
-### Visualization
+### Visualization 
 ***
-The boxplot below shows the distribution of mean Jaccard index of the 4 groups for the 100 playlists. The ***btw real*** group had the highest Jaccard index, meaning they were similar to eacxh other. The ***rec vs. real*** had intermediate Jaccard index, indicating that the recommended songs were somewhat similar to the existing songs. Jaccard index for ***not-rec vs. real group*** was near zero, showing low similarity to the exisiting songs (as ***random pairs*** of tracks).
+The boxplot below shows the distribution of mean Jaccard index of the 4 groups for the 100 playlists. The ***btw real*** group had the highest Jaccard index, meaning they were similar to eacxh other. The ***rec vs. real*** had intermediate Jaccard index, indicating that the recommended songs were somewhat similar to the existing songs. Jaccard index for ***not-rec vs. real group*** was near zero, showing low similarity to the exisiting songs (as ***random pairs*** of tracks). 
 
 
 
@@ -286,9 +281,9 @@ ordered_playlist = np.argsort(playlist_size)
 
 ```python
 # plot 20 largest playlists onto tSNE embedding
-colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
-          '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff',
-          '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1',
+colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', 
+          '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', 
+          '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', 
           '#000075', '#808080', '#ffffff', '#000000']
 fig, ax = plt.subplots(1,1,figsize = (12,10))
 x = X_embedding[50][:,0]
@@ -306,3 +301,4 @@ plt.title('Top 20 Largest Playlists in tSNE Embedding (Perplexity = 50)',fontsiz
 
 
 ![png](SVD_recommendation_rand_files/SVD_recommendation_rand_29_0.png)
+
