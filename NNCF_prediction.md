@@ -1,8 +1,17 @@
+---
+title: Neural Network Collaborative Filterting Predictions
+notebook: NNCF_prediction.ipynb
+nav_include: 2
+---
+## Contents
+1. [Non Random NNCF Predictions](#Non-Random-NNCF)
+2. [Random NNCF Predictions](#Random-NNCF)
 
-# **Making Song Recommendation with Neural Collaborative Filtering**
+# Non Random NNCF Predictions <a name="Non-Random-NNCF"></a>
+## **Making Song Recommendation with Neural Collaborative Filtering**
 
 ***
-With the neural network collaborative filtering (NNCF), we are able to make song recommendation for existing playlists. Here we are using the NNCF model subset of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists) and demonstrate how we recommend new songs to those existing playlists. 
+With the neural network collaborative filtering (NNCF), we are able to make song recommendation for existing playlists. Here we are using the NNCF model subset of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists) and demonstrate how we recommend new songs to those existing playlists.
 <br/><br/>
 The idea is to choose the songs that have the highest scores predicted by the network when paired with a specific playlist. We can then compute the Jaccard index of recommended songs and existing songs, and compare it to the Jaccard index between existing songs, and that between not-recommended songs and exisiting songs. A good recommendation would have a high Jaccard index (comparable to Jaccard index between existing songs).
 
@@ -95,10 +104,10 @@ def recommend_tracks(sps_acc, playlist_ind, model):
 
     # extract real class label from original data
     real_class = np.array(sps_acc[:,playlist_ind].toarray()).reshape(-1,)
-    
+
     # real tracks: real class one
     real_one_ind = np.argwhere(real_class).reshape(-1,)
-    
+
     # recommended tracks: predicted class one but real class zero
     recom = np.logical_and(pred_class == 1, real_class == 0)
 
@@ -143,7 +152,7 @@ def get_jaccard(sps_acc, pair):
     intersect = list(set(mem1) & set(mem2))
     union = list(set(mem1) | set(mem2))
     jaccard = len(intersect)/len(union)
-    
+
     return jaccard
 ```
 
@@ -154,7 +163,7 @@ def get_jaccard(sps_acc, pair):
 # this function creates a subset of unique pair of a given list of tracks
 def create_unique_pair_subset(track_list, num):
     track_list = list(track_list)
-    track_pairs = [(track1, track2) for i, track1 in enumerate(track_list) 
+    track_pairs = [(track1, track2) for i, track1 in enumerate(track_list)
                for j, track2 in enumerate(track_list) if i<j]
     total_num = len(track_pairs)
     if total_num > num:
@@ -162,7 +171,7 @@ def create_unique_pair_subset(track_list, num):
         track_pair_subset = [pair for idx, pair in enumerate(track_pairs) if idx in sub_ind]
     else:
         track_pair_subset = track_pairs
-    
+
     return track_pair_subset
 ```
 
@@ -221,7 +230,7 @@ not_rec_real_jac = [get_jaccard(sps_acc,i) for i in not_rec_real_pairs]
 # random pairs
 rand_pair_num = 100
 rand_id = list(np.random.choice(n_tracks, 2*rand_pair_num))
-rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num] 
+rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num]
               for tr2 in rand_id[rand_pair_num+1:] if tr1<tr2]
 rand_jac = [get_jaccard(sps_acc,i) for i in rand_pairs]
 
@@ -233,9 +242,9 @@ print('Mean Jaccard index\n rec vs. real =',np.mean(rec_real_jac),
 
 
     Mean Jaccard index
-     rec vs. real = 0.0753801134917961 
-     btw real = 0.046869115599796674 
-     not_rec vs. real 0.0003663521751324832 
+     rec vs. real = 0.0753801134917961
+     btw real = 0.046869115599796674
+     not_rec vs. real 0.0003663521751324832
      random pair 0.0005184080936074024
 
 
@@ -301,7 +310,7 @@ mean_rand_jac = []
 for ii, playlist_id in enumerate(playlist_subset):
     # specify number of recommendation (=10 songs)
     num_rec = 10
-    
+
     # get recommendation from NN model
     rec, not_rec, real = recommend_tracks(sps_acc, playlist_id, model)
 
@@ -312,7 +321,7 @@ for ii, playlist_id in enumerate(playlist_subset):
     # select rec and not_rec
     rec = rec[:num_rec]
     not_rec = not_rec[np.random.choice(not_rec.shape[0], num_rec, replace=False)]
-    
+
     # calculate the pair number
     pair_num = real.shape[0]*num_rec
 
@@ -330,20 +339,20 @@ for ii, playlist_id in enumerate(playlist_subset):
     not_rec_real_pairs = create_pairs_btw_lists(not_rec, real)
     not_rec_real_jac = [get_jaccard(sps_acc,i) for i in not_rec_real_pairs]
     mean_not_rec_real_jac.append(np.mean(not_rec_real_jac))
-    
+
     # random pairs
     rand_pair_num = 100
     rand_id = list(np.random.choice(n_tracks, 2*rand_pair_num))
-    rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num] 
+    rand_pairs = [(tr1,tr2) for tr1 in rand_id[:rand_pair_num]
                   for tr2 in rand_id[rand_pair_num+1:] if tr1<tr2]
     rand_jac = [get_jaccard(sps_acc,i) for i in rand_pairs]
     mean_rand_jac.append(np.mean(rand_jac))
 ```
 
 
-### Visualization 
+### Visualization
 ***
-The boxplot below shows the distribution of mean Jaccard index of the 4 groups for the 100 playlists. Again, the ***rec vs. real*** group and ***btw real*** have very similar distribution, indicating high/comparable similarity between them. As expected, Jaccard index for ***not-rec vs. real group*** was close zero, showing low similarity (as ***random pairs*** of tracks). 
+The boxplot below shows the distribution of mean Jaccard index of the 4 groups for the 100 playlists. Again, the ***rec vs. real*** group and ***btw real*** have very similar distribution, indicating high/comparable similarity between them. As expected, Jaccard index for ***not-rec vs. real group*** was close zero, showing low similarity (as ***random pairs*** of tracks).
 
 
 
@@ -389,3 +398,114 @@ with open('playlist_id_100_for_jaccard_NNCF10000_new.pkl','wb') as f1:
     pickle.dump(playlist_subset, f1)
 ```
 
+# Random NNCF Predictions <a name="Random-NNCF"></a>
+## **Making Song Recommendation with Neural Collaborative Filtering**
+
+***
+With the neural network collaborative filtering (NNCF), we are able to make song recommendation for existing playlists. Here we are using the NNCF model subset of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists) and demonstrate how we recommend new songs to those existing playlists.
+<br/><br/>
+The idea is to choose the songs that have the highest scores predicted by the network when paired with a specific playlist. We can then compute the Jaccard index of recommended songs and existing songs, and compare it to the Jaccard index between existing songs, and that between not-recommended songs and exisiting songs. A good recommendation would have a high Jaccard index (comparable to Jaccard index between existing songs).
+
+***
+First we load all the libraries.
+
+## Load data and model
+
+***
+Here we loaded the sparse matrix containing track-playlist contingency, as well as the NNCF model.
+
+
+
+```python
+# load files
+sps_acc = scipy.sparse.load_npz('sparse_10000_rand.npz')
+
+# convert matrix to csc type
+sps_acc = sps_acc.tocsc()
+sps_acc
+```
+
+
+
+
+
+    <171381x10000 sparse matrix of type '<class 'numpy.float64'>'
+    	with 657056 stored elements in Compressed Sparse Column format>
+
+
+
+## Define functions
+***
+Then we define several functions.
+
+- ***recommend_tracks***
+This function makes recommendation of tracks that are not currently in a specific playlist. It returns the list of tracks that were predicted by the network as class 1 but have real label class 0, sorted by the score.
+
+- ***get_jaccard***
+This function calculated the Jaccard index between a pair of tracks.
+
+- ***create_unique_pair_subset*** and ***create_pairs_btw_lists*** help creating pairs of tracks from given lists.
+
+## Make recommendation for one playlist
+***
+Here we randomly selecte a playlist, and make recommendation of the top 10 songs with the highest scores predicted by the NNCF model. We then compute Jaccard index between the recommended songs and existing songs (***rec vs. real***), and compare that to Jaccard index between exisitng songs (***btw real***), and Jaccard index between exisitng songs and 10 randomly selected non-recommended songs (***not-rec vs. real***). Jaccard inex for ***Rrandom pairs*** of tracks was also computed as baseline.
+
+
+
+```python
+
+```
+
+
+    Mean Jaccard index
+     rec vs. real = 0.016874325885359583
+     btw real = 0.06867752650047514
+     not_rec vs. real 0.00015570566551471537
+     random pair 0.00031485758244769997
+
+
+### Visualize result
+***
+We can visualize the distribution of Jaccard index of 4 groups by plotting their empirical cumulative density functions. As we can see here, the ***rec vs. real*** group and ***btw real*** have distributions of higher Jaccard index, meaning that the tracks are similar to each other (even more similar for ***rec vs. real*** than ***btw real***), whereas the Jaccard index for ***not-rec vs. real*** group was really close to zero, comparable to ***random pairs*** of tracks. Therefore, the recommendation seems to be working well.
+
+
+
+```python
+
+```
+
+
+
+![png](NNCF_prediction_rand_final_files/NNCF_prediction_rand_final_7_0.png)
+
+
+## Scale up for 100 playlists
+***
+We can scale up our recommendation to 100 randomly selected playlists and look at the statistics of the Jaccard index of each group.
+
+### Visualization
+***
+The boxplot below shows the distribution of mean Jaccard index of the 4 groups for the 100 playlists. The ***btw real*** had the highest Jaccard index, indicating high similarity between each pair. The ***rec vs. real*** had low but above zero Jaccard index. Jaccard index for ***not-rec vs. real group*** was close zero, showing low similarity (as ***random pairs*** of tracks).
+
+
+
+```python
+
+```
+
+
+
+![png](NNCF_prediction_rand_final_files/NNCF_prediction_rand_final_10_0.png)
+
+
+Zoomed in:
+
+
+
+```python
+
+```
+
+
+
+![png](NNCF_prediction_rand_final_files/NNCF_prediction_rand_final_12_0.png)
