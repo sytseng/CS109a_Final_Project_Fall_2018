@@ -1,9 +1,3 @@
----
-title: EDA
-notebook: EDA_alkmini.ipynb
-nav_include: 0
----
-
 
 # SQLite database for data hosting
 ***
@@ -44,7 +38,7 @@ cur = conn.cursor()
 ```python
 # create the tracks table
 cur.execute('''CREATE TABLE IF NOT EXISTS tracks (track text PRIMARY KEY,
-         track_name text, album text, album_name text, artist text, artist_name text,
+         track_name text, album text, album_name text, artist text, artist_name text, 
          duration_ms integer, playlist_member text, num_member integer
          );''')
 
@@ -58,7 +52,7 @@ conn.commit()
 # create playlists table
 cur.execute('''CREATE TABLE IF NOT EXISTS playlists (playlist_id INTEGER PRIMARY KEY AUTOINCREMENT,
          playlist_name TEXT, collaborative TEXT, modified_at INTEGER, num_tracks INTEGER, num_albums INTEGER,
-         num_artists INTEGER, num_followers INTEGER, num_edits INTEGER, playlist_duration_ms INTEGER,
+         num_artists INTEGER, num_followers INTEGER, num_edits INTEGER, playlist_duration_ms INTEGER, 
          tracks TEXT);''')
 
 conn.commit()
@@ -84,26 +78,26 @@ First we defined several functions to process and prepare data for insertion.
 def process_playlist(playlist_dict):
     columns = ['playlist_name','collaborative','modified_at','num_tracks','num_albums',
                'num_artists','num_followers','num_edits','duration_ms']
-
+    
     playlist = {}
-
+    
     for col in columns:
         if col in playlist_dict.keys():
             playlist[col] = playlist_dict[col]
         else:
             playlist[col] = None
-
+            
     if 'name' in playlist_dict.keys() and playlist['playlist_name'] == None:
         playlist['playlist_name'] =playlist_dict['name']
-
+        
     all_track_uri = [tr['track_uri'].split(':')[-1] for tr in playlist_dict['tracks']]
     all_track_uri = ','.join(set(all_track_uri)) # take unique tracks
     playlist['tracks'] = all_track_uri
     playlist['playlist_duration_ms'] = playlist.pop('duration_ms')
-
+    
     playlist_df = pd.DataFrame(playlist, index=[0])
     playlist_df = playlist_df.set_index('playlist_name')
-
+    
     return playlist_df
 ```
 
@@ -116,7 +110,7 @@ def clean_uri(track,uri):
         cleaned_uri = track[uri].split(':')[-1]
     elif type(track[uri])==type(None):
         cleaned_uri = ''
-    return cleaned_uri
+    return cleaned_uri 
 ```
 
 
@@ -140,7 +134,7 @@ def process_tracks_into_df(tracks, playlist_id):
     tracks_df['playlist_member'] = str(playlist_id)
     # add number of membership
     tracks_df['num_member'] = 1
-
+    
     return tracks_df
 ```
 
@@ -154,15 +148,15 @@ def prepare_tracks_update(tracks_df, playlist_id, conn, cur):
     keys = tracks_in_playlist
     keys = '\',\''.join(keys)
     keys = "('"+keys+"')"
-
+    
     # fetch existing keys
     query = 'SELECT * FROM tracks WHERE track IN {};'.format(keys)
     existing_tuples = pd.read_sql_query(query, conn)
-
+    
     # if none of the track exists, return whole tracks_df
     if len(existing_tuples) == 0:
         tracks_df_new = tracks_df.copy()
-
+    
     # if there are pre-existing tracks
     elif len(existing_tuples) > 0:
         # expand playlist membership
@@ -171,7 +165,7 @@ def prepare_tracks_update(tracks_df, playlist_id, conn, cur):
         existing_tuples['num_member'] = existing_tuples.apply(
             lambda x: x.num_member + 1, axis=1)
         existing_tuples= existing_tuples.set_index('track')
-
+        
         # delete existing keys
         query = 'DELETE FROM tracks WHERE track IN {};'.format(keys)
         cur.execute(query)
@@ -180,10 +174,10 @@ def prepare_tracks_update(tracks_df, playlist_id, conn, cur):
         # extract non-existing tracks
         existing_mask = tracks_df.index.isin(existing_tuples.index)
         tracks_df_new = tracks_df.iloc[~existing_mask].copy()
-
+        
         # combine non-exisitng tracks with updated exisiting tracks
         tracks_df_new = tracks_df_new.append(existing_tuples)
-
+        
     return tracks_df_new
 ```
 
@@ -221,38 +215,38 @@ processed_files = []
 unprocessed_files = playlist_path.copy()
 
 # loop over file subsets
-for file_ind, filepath in enumerate(playlist_path_sub):
+for file_ind, filepath in enumerate(playlist_path_sub):  
     # keep track of files that have been processed
     print('File number = ', file_ind)
     unprocessed_files.remove(filepath)
     processed_files.append(filepath)
-
+    
     # load the file
     with open(filepath, "r") as fd:
         data = json.load(fd)
-
+    
     # find number of playlists
     num_playlist = len(data['playlists'])
-
+    
     # loop over all playlists
     for playlist_dict in data['playlists']:
         # process playlist
         this_playlist = process_playlist(playlist_dict)
-
+        
         # insert playlist into playlists table
         this_playlist.to_sql('playlists', conn, if_exists='append')
-
+        
         # get playlist_id (the most recent inserted (max playlist_id))
         query_max_id = 'SELECT MAX(playlist_id) FROM playlists;'
         playlist_id = cur.execute(query_max_id).fetchall()[0][0]
-
+        
         # get list of all tracks and process into dataframe
         these_tracks = playlist_dict['tracks']
         tracks_df = process_tracks_into_df(these_tracks, playlist_id)
-
+        
         # get tracks dataframe for insertion
         tracks_df_to_insert = prepare_tracks_update(tracks_df, playlist_id, conn, cur)
-
+        
         # insert tracks dataframe into tracks table
         tracks_df_to_insert.to_sql('tracks', conn, if_exists='append')
 ```
@@ -716,7 +710,7 @@ plt.title('Distribution of number of tracks in playlists', fontsize = 15);
 ![png](Building_SQLite_database_files/Building_SQLite_database_23_1.png)
 
 
-We can kind of get a sense here that this dataset is very sparse. We had a huge number of playlists and tracks, but the chance that one playlist contained one particular track was pretty low.
+We can kind of get a sense here that this dataset is very sparse. We had a huge number of playlists and tracks, but the chance that one playlist contained one particular track was pretty low. 
 
 ## Closing cursor and disconnecting database
 
@@ -728,147 +722,3 @@ cur.close()
 conn.close()
 ```
 
-
-```python
-import sys, os
-import sqlite3
-import pandas as pd
-import json
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-%matplotlib inline
-
-```
-
-
-## Exploration of the Spotify API data - audio features
-
-In order to understand the audio features, we can look at the distribution of the data provided by the Spotify API.
-
-```python
-# Access spotify
-import spotipy as sp
-import spotipy.oauth2 as oauth2
-import sqlite3
-import pandas as pd
-
-# set up authorization token
-credentials = oauth2.SpotifyClientCredentials(
-        client_id='153369a05314402294db1a574caaff2a',
-        client_secret='c6fff0923a0c44c5851fc4415038e8fa')
-
-token = credentials.get_access_token()
-spotify = sp.Spotify(auth=token)
-```
-
-
-
-
-```python
-# Explore 500 tracks
-
-N = 2000
-
-audio_feat_tracks = pd.read_sql_query("SELECT * from tracks ORDER BY RANDOM() LIMIT {};".format(N), conn)
-
-```
-
-
-
-
-```python
-# Take track IDs in order to access the API
-
-ids = audio_feat_tracks['track'].values.tolist()
-
-# All audio features -- for EDA
-
-danceability = []
-energy = []
-key = []
-loudness = []
-mode = []
-speechiness = []
-acousticness = []
-instrumentalness = []
-liveness = []
-valence = []
-tempo = []
-duration_ms = []
-time_signature = []
-
-features = [danceability, energy, key, loudness, mode, speechiness, acousticness,\
-           instrumentalness, liveness, valence, tempo, duration_ms, time_signature]
-
-feature_names = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness',\
-                 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', \
-                 'duration_ms', 'time_signature']
-
-# Collect into lists:
-
-for track_id in ids:
-    results = spotify.audio_features(tracks=track_id)
-
-    # Add into lists
-    danceability.append(results[0]['danceability'])
-    energy.append(results[0]['energy'])
-    key.append(results[0]['key'])
-    loudness.append(results[0]['loudness'])
-    mode.append(results[0]['mode'])
-    speechiness.append(results[0]['speechiness'])
-    acousticness.append(results[0]['acousticness'])
-    instrumentalness.append(results[0]['instrumentalness'])
-    liveness.append(results[0]['liveness'])
-    valence.append(results[0]['valence'])
-    tempo.append(results[0]['tempo'])
-    duration_ms.append(results[0]['duration_ms'])
-    time_signature.append(results[0]['time_signature'])
-
-
-```
-
-
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-
-
-
-
-```python
-# Plot distributions
-
-N_features = len(feature_names)
-
-fig, ax = plt.subplots(ncols = 2, nrows = N_features//2+1, figsize = (14,25))
-for i in range(N_features):
-    ax[i//2, i%2].hist(features[i]);
-    ax[i//2, i%2].set_title(feature_names[i])
-    ax[i//2, i%2].set_ylabel('Frequency')
-    ax[i//2, i%2].set_xlabel('Values')
-
-plt.tight_layout()
-
-```
-
-
-
-![png](EDA_alkmini_files/EDA_alkmini_8_0.png)
-
-
-We notice that the distributions for danceability and tempo are somewhat normal, whereas the valence distribution is almost uniform. For the other variables, some of which are categorical, and others are continuous with varying distributions. This information will be useful to keep in mind when building our models.
-
-
----- ----- ----- -----
