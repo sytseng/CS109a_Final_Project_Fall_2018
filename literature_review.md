@@ -55,17 +55,15 @@ As we see from the architectural image, NCF creates vectors for multi-layer pece
 Both MF and MLP are performed in order to project data of higher dimensions to a lower dimension.
 Then the products of MF and MLP are combined through Neural MF to make the final prediction.
 
-## Principal Component Analysis (PCA)##
+## Principal Component Analysis (PCA)
 
 A technique used to reduce the dimensionality of the feature space and find the directions of most variation in a data set. It is a useful approach for feature selection and for avoiding the curse of dimensionality.
 Performing a PCA is just finding the eigenvalues and eigenvectors of the data set's correlation matrix, $Σ=Y^TY$, where $Y=X−μX$. $X$ is an $N×M$ matrix of data points, where each row is one of the N samples and each column in one of the M features, and $μX$ is the empirical mean value of the data set.
 
-## k-NN algorithm##
+## k-NN algorithm
 
 The k-nearest neighbors algorithm (k-NN) is a non-parametric method used for classification and regression. In both cases, the input consists of the k closest training examples in the feature space. The output depends on whether k-NN is used for classification or regression; i.e. in k-NN classification, the output is a class membership whereas in k-NN regression, the output is the property value for the object.
 
-## k-means clustering##
+## k-means clustering
 
 k-means clustering is a method popular of vector quantization that is popular for cluster analysis in data mining. This algorithm aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as the center of the cluster, also known as the centroid.
-
-** **
