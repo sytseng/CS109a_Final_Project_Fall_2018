@@ -27,17 +27,17 @@ MF can help find latent features that influence the interaction between users an
 , with the purpose of lowering the dimensionality of data. MF can be helpful in finding latent features that influence the interation between users and items.
 
 As for the mathematics behind MF:
-If the number of users is U, and the number of items is I, M is the initial matrix with the preferences of users regarding the items, then the size of M is U*I.
+If the number of users is $U$, and the number of items is $I$, $M$ is the initial matrix with the preferences of users regarding the items, then the size of $M$ is $U \times I$.
 
-To find F features, the two matrices that will be created from M are Q and R, with sizes (U x F) and (I x F), so that the product of Q and R-transpose is M.
+To find $F$ features, the two matrices that will be created from $M$ are $Q$ and $R$, with sizes $U \times F$ and $I \times F$, so that the product of $Q$ and $R^{T}$ is $M$.
 
 ### Single Value Decomposition
 
-If we're looking to decompose an $m \times n$ matrix M, then through SVD it will be decomposed into 3 different matrices, as M = U S V*, where:
+If we're looking to decompose an $m \times n$ matrix $M$, then through SVD it will be decomposed into 3 different matrices, as $M = U S V^{\dag}$, where:
 
-1)  U : m x m unitary matrix, whose columns are called the **left singular vectors** of matrix M, and a set of orthonormal eigenvectors of **MM*** (where M*: conjugate transpose of the M)
-2) S : m x n diagonal matrix with non-negative cells, whose diagonal values are known as the **singular values** of M, and also the square roots of the non-zero eigenvalues of both **M∗ M** and **MM∗**.
-3) V: n x n unitary matrix, whose columns are the **right singular vectors** of M, and orthonormal eigenvector of **M∗ M**.
+1)  $U$ : $m \times n$ unitary matrix, whose columns are called the **left singular vectors** of matrix $M$, and a set of orthonormal eigenvectors of **MM*** (where $M^{\dag}$: conjugate transpose of the $M$)
+2) $S$ : $m \times n$ diagonal matrix with non-negative cells, whose diagonal values are known as the **singular values** of $M$, and also the square roots of the non-zero eigenvalues of both **M∗ M** and **MM∗**.
+3) $V$: $n \times n$ unitary matrix, whose columns are the **right singular vectors** of $M$, and orthonormal eigenvector of **M∗ M**.
 
 More information about SVD and its applications on Filtering can be found in the following paper:
 *Vozalis, Manolis G., and Konstantinos G. Margaritis. "Applying SVD on Generalized Item-based Filtering." IJCSA 3.3 (2006): 27-51.*
