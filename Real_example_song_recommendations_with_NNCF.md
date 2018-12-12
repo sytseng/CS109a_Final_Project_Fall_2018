@@ -1,7 +1,7 @@
 ---
 title: Song Recommendation Example
 notebook: Real_example_song_recommendation_with_NNCF.ipynb
-nav_include: 6
+nav_include: 7
 ---
 
 # Song recommendation in action

@@ -1,7 +1,7 @@
 ---
 title: Conclusion and Future Directions
 notebook: Conclusion_and_future_direction.ipynb
-nav_include: 7
+nav_include: 8
 ---
 
 # Conclusion and future direction
