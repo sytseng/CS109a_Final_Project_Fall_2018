@@ -8,20 +8,22 @@ nav_include: 8
 
 In this project, we worked on the Million Playlists Dataset and audio features of tracks from Spotify API to implement song recommender systems. We approached this goal using to different ways: ***content-based*** and ***collaborative filerting***.
 
-## Content-based filtering
+## Content-based analysis
 From our analysis using only the Spotify API and the audio features of the songs, we saw that it would be difficult to make a model purely based on the song content.
 
 This conclusion, nonetheless, is not unreasonable.
 Energy, for instance, which describes the intensity of the song, can have similar values for songs that are under very different genres, e.g. metal and reggaeton.
 Therefore, metrics like these are not strongly correlated with the similarity of two songs, or the probability of them belonging in the same playlist.
 
-As a result, our analysis based on content illuminated the necessity of explorative analysis on collaborative filtering.
-
-## K-means Clustering
+### K-means Clustering
 We used k-nn clustering to identify which tracks were similar based on their audio features. Although our model provided a content-based filtering approach, it was not very robust because the clustering of tracks was not stable. Because of the way the algorithm is built, if clustering is applied repeatedly to different samples from this distribution, it might sometimes construct the horizontal and sometimes the vertical solution. Obviously, these two solutions are very different from each other, hence the clustering results are instable. Therefore, the challenge with applying the k-nn clustering algorithm to recommend songs, we would have to ensure the correct number of clusters is chosen -- otherwise, the model becomes unstable.
 
+As a result, our analysis based on content illuminated the necessity of explorative analysis on collaborative filtering.
+
+
+
 ## Collaborative filtering
-***
+
 We used both ***matrix factorization*** and ***neural networks*** to implement collaborative filtering. We tested them on a subset of 10,000 playlists seeded with a popular song as well as a randomly selected subset, and used Jaccard index as a performance measurement.
 
 ### Matrix factorization
