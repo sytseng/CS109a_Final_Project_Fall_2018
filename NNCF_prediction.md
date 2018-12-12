@@ -1,7 +1,7 @@
 ---
-title: Neural Network Collaborative Filterting Predictions
+title: NNCF Predictions
 notebook: NNCF_prediction.ipynb
-nav_include: 2
+nav_include: 3
 ---
 ## Contents
 1. [Non Random NNCF Predictions](#Non-Random-NNCF)

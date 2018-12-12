@@ -1,6 +1,6 @@
 ---
 title: Literature Review
-nav_include: 4
+nav_include: 5
 ---
 
 # Literature Review, Concepts and Resources
@@ -49,7 +49,7 @@ More information about SVD and its applications on Filtering can be found in the
 
 He, Xiangnan, et al. "Neural collaborative filtering." Proceedings of the 26th International Conference on World Wide Web. International World Wide Web Conferences Steering Committee, 2017.
 
-  **PASTE IMAGE HERE**
+![png](lit_images/NCF.png)
 
 As we see from the architectural image, NCF creates vectors for multi-layer peceptron (MLP) and matrix factorization (MF) for both the user and the item.
 Both MF and MLP are performed in order to project data of higher dimensions to a lower dimension.

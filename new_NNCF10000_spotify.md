@@ -1,7 +1,7 @@
 ---
-title: Neural Network Collaborative Filterting Recommendation Systems
+title: NNCF Recommendation Systems
 notebook: NNCF_prediction.ipynb
-nav_include: 3
+nav_include: 4
 ---
 
 ## Contents

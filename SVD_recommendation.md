@@ -1,7 +1,7 @@
 ---
 title: SVD Recommendation Systems
 notebook: SVD_recommendation_rand.ipynb
-nav_include: 1
+nav_include: 2
 ---
 ## Contents
 1. [Non Random SVD Model](#Non-Random-SVD)
