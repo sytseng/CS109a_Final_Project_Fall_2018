@@ -803,9 +803,7 @@ When we looked at the normalized confusion matrix, we found that this model gave
 # Random NNCF Model <a name="Random-NNCF"></a>
 ## Neural Collaborative Filtering (NNCF)
 ***
-Besides classical matrix factorization, we also implemented the neural network version of collaborative filtering: using deep network model to perform matrix factorization, as well as allowing extra playlist-track mixing.
-
-The code implemented here was adopted from this 2017 WWW paper on __[Neural Collaborative Filtering](https://www.comp.nus.edu.sg/~xiangnan/papers/ncf.pdf)__ and a comprehensive __[blogpost](https://nipunbatra.github.io/blog/2017/neural-collaborative-filtering.html)__ written by Dr. Nipun Batra, Assistant Professor in Computer Science Department at IIT Gandhinagar. We applied the architecture of the NNCF model to the same subset of data consisting of randomly selected 10,000 playlists, training the network to perform binary classifcation on playlist-track pairs (predicting 0 vs. 1), and evaluated the model performance.
+We applied the architecture of the NNCF model to the same subset of data consisting of randomly selected 10,000 playlists, training the network to perform binary classifcation on playlist-track pairs (predicting 0 vs. 1), and evaluated the model performance.
 
 ***
 First we import the libraries.
@@ -916,99 +914,7 @@ model.compile(optimizer='adam', loss= 'binary_crossentropy', metrics = ['accurac
 ```
 
 
-Here is the summary of the model.
-
-
-
-```python
-
-```
-
-
-
-
-
-![svg](new_NNCF10000_rand_spotify_files/new_NNCF10000_rand_spotify_9_0.svg)
-
-
-
-
-
-```python
-
-```
-
-
-    __________________________________________________________________________________________________
-    Layer (type)                    Output Shape         Param #     Connected to
-    ==================================================================================================
-    Track (InputLayer)              (None, 1)            0
-    __________________________________________________________________________________________________
-    Playlist (InputLayer)           (None, 1)            0
-    __________________________________________________________________________________________________
-    track-Embedding-MLP (Embedding) (None, 1, 10)        1713820     Track[0][0]
-    __________________________________________________________________________________________________
-    playlist-Embedding-MLP (Embeddi (None, 1, 10)        100010      Playlist[0][0]
-    __________________________________________________________________________________________________
-    Flatten_tracks-MLP (Flatten)    (None, 10)           0           track-Embedding-MLP[0][0]
-    __________________________________________________________________________________________________
-    Flatten_playlists-MLP (Flatten) (None, 10)           0           playlist-Embedding-MLP[0][0]
-    __________________________________________________________________________________________________
-    dropout_1 (Dropout)             (None, 10)           0           Flatten_tracks-MLP[0][0]
-    __________________________________________________________________________________________________
-    dropout_3 (Dropout)             (None, 10)           0           Flatten_playlists-MLP[0][0]
-    __________________________________________________________________________________________________
-    Concat (Concatenate)            (None, 20)           0           dropout_1[0][0]
-                                                                     dropout_3[0][0]
-    __________________________________________________________________________________________________
-    dropout_5 (Dropout)             (None, 20)           0           Concat[0][0]
-    __________________________________________________________________________________________________
-    FullyConnected (Dense)          (None, 200)          4200        dropout_5[0][0]
-    __________________________________________________________________________________________________
-    Batch (BatchNormalization)      (None, 200)          800         FullyConnected[0][0]
-    __________________________________________________________________________________________________
-    Dropout-1 (Dropout)             (None, 200)          0           Batch[0][0]
-    __________________________________________________________________________________________________
-    FullyConnected-1 (Dense)        (None, 100)          20100       Dropout-1[0][0]
-    __________________________________________________________________________________________________
-    Batch-2 (BatchNormalization)    (None, 100)          400         FullyConnected-1[0][0]
-    __________________________________________________________________________________________________
-    track-Embedding-MF (Embedding)  (None, 1, 50)        8569100     Track[0][0]
-    __________________________________________________________________________________________________
-    playlist-Embedding-MF (Embeddin (None, 1, 50)        500050      Playlist[0][0]
-    __________________________________________________________________________________________________
-    Dropout-2 (Dropout)             (None, 100)          0           Batch-2[0][0]
-    __________________________________________________________________________________________________
-    Flatten_tracks-MF (Flatten)     (None, 50)           0           track-Embedding-MF[0][0]
-    __________________________________________________________________________________________________
-    Flatten_playlists-MF (Flatten)  (None, 50)           0           playlist-Embedding-MF[0][0]
-    __________________________________________________________________________________________________
-    FullyConnected-2 (Dense)        (None, 50)           5050        Dropout-2[0][0]
-    __________________________________________________________________________________________________
-    dropout_2 (Dropout)             (None, 50)           0           Flatten_tracks-MF[0][0]
-    __________________________________________________________________________________________________
-    dropout_4 (Dropout)             (None, 50)           0           Flatten_playlists-MF[0][0]
-    __________________________________________________________________________________________________
-    FullyConnected-3 (Dense)        (None, 20)           1020        FullyConnected-2[0][0]
-    __________________________________________________________________________________________________
-    Dot (Dot)                       (None, 1)            0           dropout_2[0][0]
-                                                                     dropout_4[0][0]
-    __________________________________________________________________________________________________
-    Activation (Dense)              (None, 1)            21          FullyConnected-3[0][0]
-    __________________________________________________________________________________________________
-    Concat-MF-MLP (Concatenate)     (None, 2)            0           Dot[0][0]
-                                                                     Activation[0][0]
-    __________________________________________________________________________________________________
-    Combine-MF-MLP (Dense)          (None, 100)          300         Concat-MF-MLP[0][0]
-    __________________________________________________________________________________________________
-    FullyConnected-4 (Dense)        (None, 100)          10100       Combine-MF-MLP[0][0]
-    __________________________________________________________________________________________________
-    Prediction (Dense)              (None, 2)            202         FullyConnected-4[0][0]
-    ==================================================================================================
-    Total params: 10,925,173
-    Trainable params: 10,924,573
-    Non-trainable params: 600
-    __________________________________________________________________________________________________
+The architecture for this network is the same as the previous one.
 
 
 ## Spliting data
@@ -1017,9 +923,7 @@ We split 5% of the data from the whole dataset, and distributed the 5% equally i
 
 
 
-```python
 
-```
 
 
     # of all sample = 1713810000
@@ -1032,9 +936,7 @@ A trick here: We masked the splited data by setting the value to 2, and later ex
 
 
 
-```python
 
-```
 
 
     /Users/shihyitseng/anaconda3/lib/python3.6/site-packages/scipy/sparse/compressed.py:746: SparseEfficiencyWarning: Changing the sparsity structure of a csc_matrix is expensive. lil_matrix is more efficient.
@@ -1057,9 +959,7 @@ Plotted below is the training/validation loss during the training process. Both 
 
 
 
-```python
 
-```
 
 
 
@@ -1070,9 +970,7 @@ We can also look at the accuracy of training and validation data. It reflected s
 
 
 
-```python
 
-```
 
 
 
@@ -1089,9 +987,7 @@ First, we evaluted the performance of the final model on test set. The accuracy 
 
 
 
-```python
 
-```
 
 
     42845250/42845250 [==============================] - 1265s 30us/step
@@ -1101,9 +997,7 @@ First, we evaluted the performance of the final model on test set. The accuracy 
 
 
 
-```python
 
-```
 
 
     Loss on test data = 0.9937882089614868
@@ -1116,9 +1010,7 @@ We then made the prediction on test data and plotted confusion matrix (both non-
 
 
 
-```python
 
-```
 
 
     predicted proportion of ones = 0.031673802813614114
@@ -1126,9 +1018,7 @@ We then made the prediction on test data and plotted confusion matrix (both non-
 
 
 
-```python
 
-```
 
 
     Confusion matrix, without normalization
@@ -1142,9 +1032,7 @@ We then made the prediction on test data and plotted confusion matrix (both non-
 
 
 
-```python
 
-```
 
 
     Normalized confusion matrix
@@ -1160,9 +1048,7 @@ We can also quantify the model performance using area under ROC.
 
 
 
-```python
 
-```
 
 
     auROC = 0.7505850277437294
@@ -1174,9 +1060,7 @@ Since the final model might be a little bit overfitting according to the trainin
 
 
 
-```python
 
-```
 
 
     42845250/42845250 [==============================] - 1337s 31us/step
@@ -1186,9 +1070,7 @@ Since the final model might be a little bit overfitting according to the trainin
 
 
 
-```python
 
-```
 
 
     Loss on test data (class balanced) = 0.4995765554904938
@@ -1201,9 +1083,7 @@ We can look at the confusion matrix, too.
 
 
 
-```python
 
-```
 
 
     predicted proportion of ones = 0.11839219049953029
@@ -1211,9 +1091,7 @@ We can look at the confusion matrix, too.
 
 
 
-```python
 
-```
 
 
     Confusion matrix, without normalization
@@ -1227,9 +1105,7 @@ We can look at the confusion matrix, too.
 
 
 
-```python
 
-```
 
 
     Normalized confusion matrix
@@ -1243,9 +1119,7 @@ We can look at the confusion matrix, too.
 
 
 
-```python
 
-```
 
 
     auROC = 0.7650765407927385

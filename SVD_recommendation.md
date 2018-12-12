@@ -531,95 +531,6 @@ with open('jaccard_latent_factors_SVD.pkl','wb') as f2:
 ```
 
 
-## Extra visualization: tracks in tSNE embedding
-***
-We can play with the data a little bit more by visualizing the tracks in SVD latent space using tSNE in 2D. We first performed SVD with 100 components.
-
-
-
-```python
-# perform SVD with 100 latent components
-n_comps = 100
-svd = TruncatedSVD(n_components=n_comps, algorithm ='arpack')
-svd.fit(sps_acc.transpose())
-sin_mat = np.diag(svd.singular_values_)
-feature = np.dot(svd.components_[:,::4].transpose(),sin_mat)
-```
-
-
-Then we fit tSNE with different values for perplexity.
-
-
-
-```python
-# perform tSNE on tracks in the latent space
-from sklearn.manifold import TSNE
-perplex = [5.,10.,20.,30.,50.,100.]
-X_embedding = {}
-for per in perplex:
-    print(per)
-    this_embedding = TSNE(n_components=2, perplexity = per, verbose=1).fit_transform(feature)
-    X_embedding[per] = this_embedding
-```
-
-
-Visualizing them: as the perplexity increased, we observed more clusters/sturctures in the plot.
-
-
-
-```python
-sns.set_style("white")
-fig, axes = plt.subplots(6,1,figsize = (10,50))
-i = 0
-for key, val in X_embedding.items():
-    x = val[:,0]
-    y = val[:,1]
-    axes[i].scatter(x,y,s=1,c='k');
-    axes[i].set(xlabel = 'tSNE1', ylabel ='tSNE2', title = 'tSNE embedding, perplexity = {}'.format(key));
-    i += 1
-```
-
-
-
-![png](SVD_recommendation_files/SVD_recommendation_37_0.png)
-
-
-We can also plot tracks in several large playlists onto the tSNE plot. Sometimes songs within a playlist seemed to be clustered at some location, but sometimes they appeared to be spread out.
-
-
-
-```python
-# sort playlists by size
-playlist_size = np.array(sps_acc.sum(axis = 0)).reshape(-1,)
-ordered_playlist = np.argsort(playlist_size)
-```
-
-
-
-
-```python
-# plot 20 largest playlists onto tSNE embedding
-colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
-          '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff',
-          '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1',
-          '#000075', '#808080', '#ffffff', '#000000']
-fig, ax = plt.subplots(1,1,figsize = (12,10))
-x = X_embedding[50][:,0]
-y = X_embedding[50][:,1]
-plt.scatter(x,y,s=1,c='k');
-for i in range(10):
-    this_playlist = np.array(sps_acc[:,ordered_playlist[-i]].toarray()).reshape(-1,).astype(int)
-    idx = this_playlist[::4]
-    plt.scatter(x[idx==1],y[idx==1],s=30,c=colors[i],marker = 'x')
-plt.xlabel('tSNE1', fontsize = 15)
-plt.ylabel('tSNE2', fontsize = 15)
-plt.title('Top 20 Largest Playlists in tSNE Embedding (Perplexity = 50)',fontsize = 20);
-```
-
-
-
-![png](SVD_recommendation_files/SVD_recommendation_40_0.png)
-
 # Random SVD Model <a name="Random-SVD"></a>
 ## Matrix factorization and song recommendation
 ***
@@ -657,9 +568,7 @@ We used ***truncatedSVD*** from sklearn to explore the explained variance ratio 
 
 
 
-```python
 
-```
 
 
 
@@ -695,9 +604,7 @@ As we can see, the singular values dropped rapidly between from 1-50 latent fact
 
 
 
-```python
 
-```
 
 
 
@@ -788,9 +695,7 @@ We can visualize the distribution of Jaccard index of 4 groups by plotting their
 
 
 
-```python
 
-```
 
 
 
@@ -807,9 +712,7 @@ The boxplot below shows the distribution of mean Jaccard index of the 4 groups f
 
 
 
-```python
 
-```
 
 
 
@@ -826,9 +729,7 @@ As we increased the number of latent factors, the mean Jaccard index between the
 
 
 
-```python
 
-```
 
 
 

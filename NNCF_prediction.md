@@ -452,9 +452,7 @@ Here we randomly selecte a playlist, and make recommendation of the top 10 songs
 
 
 
-```python
 
-```
 
 
     Mean Jaccard index
@@ -470,9 +468,7 @@ We can visualize the distribution of Jaccard index of 4 groups by plotting their
 
 
 
-```python
 
-```
 
 
 
@@ -489,9 +485,7 @@ The boxplot below shows the distribution of mean Jaccard index of the 4 groups f
 
 
 
-```python
 
-```
 
 
 
@@ -502,9 +496,7 @@ Zoomed in:
 
 
 
-```python
 
-```
 
 
 
