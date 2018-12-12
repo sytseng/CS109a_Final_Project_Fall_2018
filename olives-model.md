@@ -4,7 +4,7 @@ notebook: olives-model.ipynb
 nav_include: 2
 ---
 
-# Table of Contents Pineapple
+# Table of Contents Pineapple 2
 1. [Preddicting via SVM](#Predicting-via-SVM)
 2. [Allowing for crossovers](#Allowing-for-crossovers)
 
@@ -279,7 +279,7 @@ dfsouth.head()
 
 
 
-## Predicting via SVM
+## Predicting via SVM <a name="Predicting-via-SVM"></a>
 
 
 
