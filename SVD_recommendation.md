@@ -4,14 +4,16 @@ notebook: SVD_recommendation_rand.ipynb
 nav_include: 3
 ---
 ## Contents
-1. [Non Random SVD Model](#Non-Random-SVD)
-2. [Random SVD Model](#Random-SVD)
+1. [SVD Model on Non-random Dataset](#Non-Random-SVD)
+2. [SVD Model on Random Dataset](#Random-SVD)
 
-# Non Random SVD Model <a name="Non-Random-SVD"></a>
+# SVD Model on Non-random Dataset <a name="Non-Random-SVD"></a>
 ## Matrix factorization and song recommendation
 ***
 A common approach for collaborative filtering is matrix factorization, where we decompose the full matrix of playlist-track contingency into product of low rank matrices. Each playlist and track is represented into a lower dimensional latent factor space, and the product of the matrices approximates the original data. Here was use singular value decomposition (SVD) to perform matrix factorization on a subset of data consisting of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists), and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
+
 ***
+
 First we load all the libraries.
 
 
@@ -531,12 +533,12 @@ with open('jaccard_latent_factors_SVD.pkl','wb') as f2:
 ```
 
 
-# Random SVD Model <a name="Random-SVD"></a>
+# SVD Model on Random Dataset <a name="Random-SVD"></a>
 ## Matrix factorization and song recommendation
 ***
-A common approach for collaborative filtering is matrix factorization, where we decompose the full matrix of playlist-track contingency into product of low rank matrices. Each playlist and track is represented into a lower dimensional latent factor space, and the product of the matrices approximates the original data. Here was use singular value decomposition (SVD) to perform matrix factorization on a subset of data consisting of randomly selected 10,000 playlists, and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
-***
-First we load all the libraries.
+Here we applied SVD on a subset of data consisting of randomly selected 10,000 playlists, and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
+
+
 
 ## Load data
 
