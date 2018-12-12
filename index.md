@@ -2,7 +2,7 @@
 title: Spotify Playlists Recommender
 ---
 
-Alkmini Chalofti, Liam Corrigan, Andra Fehmiu, Tseng Shih-Yi
+Alkmini Chalofti, Liam Corrigan, Andra Fehmiu, Shih-Yi Tseng
 Group No. 32
 
 ## Project Description
