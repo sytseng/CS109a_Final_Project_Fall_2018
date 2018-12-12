@@ -309,10 +309,6 @@ sps_two[split_tracks,split_playlists] = 2
 ```
 
 
-    /Users/shihyitseng/anaconda3/lib/python3.6/site-packages/scipy/sparse/compressed.py:746: SparseEfficiencyWarning: Changing the sparsity structure of a csc_matrix is expensive. lil_matrix is more efficient.
-      SparseEfficiencyWarning)
-
-
 ## Define training data generator
 ***
 One important step we took for training was to artificially ***balance the class labels***. Since the class 1 pairs were extremely sparse, a network trained on the original data can end up predicting everything to 0. Actuaslly that was what we got when we started with the naive way. In the current version we presented here, the training generator yielded augemented data with equalized class number. This would force the network to pay more attention on the class 1 samples, and bias the network to have a higher prior to class 1 than the real prior (which was around 0.1%). But the "high" false positive rate is actually what we want! We need to make recommendation on extending the songs in a playlists, and the "false positive" samples would be the candidates for recommendation.
@@ -710,7 +706,6 @@ print('Loss on test data =', test_result_best[0],
 ```
 
 
-    18612500/18612500 [==============================] - 503s 27us/step
     Loss on test data = 0.3220961782173249
     Accuracy on test data = 0.8845281934184144
 
@@ -977,20 +972,12 @@ We used the visualization function for confusion matrix from __[sklearn website]
 ***
 First, we evaluted the performance of the final model on test set. The accuracy was 97% before class balancing, and 75% after class balancing, which was really close to the training and validation performance at the final epochs.
 
+For test data with original class ratio:
 
-
-
-
-
-    42845250/42845250 [==============================] - 1265s 30us/step
     Loss on test data = 0.0913167645157834
     Accuracy on test data = 0.9683511357735105
 
-
-
-
-
-
+For class balanced test data:
 
     Loss on test data = 0.9937882089614868
     Accuracy on test data = 0.7507510006427764
@@ -1006,12 +993,6 @@ We then made the prediction on test data and plotted confusion matrix (both non-
 
 
     predicted proportion of ones = 0.031673802813614114
-
-
-
-
-
-
 
     Confusion matrix, without normalization
     [[41480535  1348361]
