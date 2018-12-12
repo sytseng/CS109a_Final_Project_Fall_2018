@@ -1,9 +1,13 @@
 ---
 title: Spotify Playlists Recommender
 ---
-
+Harvard CS109A, fall 2018
+<br/>
+Final Prject Group No. 32
+<br/>
 Alkmini Chalofti, Liam Corrigan, Andra Fehmiu, Shih-Yi Tseng
-Group No. 32
+<br/>
+
 
 ## Project Description
 Today there is a prevalence of modern music streaming applications like Spotify, Pandora, and Apple Music, where millions of users consistently are consistently generating playlists. One aspect of retaining customers is recommending new songs so that the user will be engaged in discovering new artists. The aim of our project is to create a playlist recommendation system, whereby given some set of songs in a playlist we would generate some distinct set of songs that a user would be likely to enjoy given the songs on that original playlist.
