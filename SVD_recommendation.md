@@ -4,10 +4,10 @@ notebook: SVD_recommendation_rand.ipynb
 nav_include: 1
 ---
 ## Contents
-{:.no_toc}
-*
-{: toc}
+1. [Non Random SVD Model](#Non-Random-SVD)
+2. [Random SVD Model](#Random-SVD)
 
+# Non Random SVD Model <a name="Non-Random_SVD"></a>
 ## Matrix factorization and song recommendation
 ***
 A common approach for collaborative filtering is matrix factorization, where we decompose the full matrix of playlist-track contingency into product of low rank matrices. Each playlist and track is represented into a lower dimensional latent factor space, and the product of the matrices approximates the original data. Here was use singular value decomposition (SVD) to perform matrix factorization on a subset of data consisting of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists), and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
@@ -620,7 +620,8 @@ plt.title('Top 20 Largest Playlists in tSNE Embedding (Perplexity = 50)',fontsiz
 
 ![png](SVD_recommendation_files/SVD_recommendation_40_0.png)
 
-# Matrix factorization and song recommendation
+# Random SVD Model <a name="Random-SVD"></a>
+## Matrix factorization and song recommendation
 ***
 A common approach for collaborative filtering is matrix factorization, where we decompose the full matrix of playlist-track contingency into product of low rank matrices. Each playlist and track is represented into a lower dimensional latent factor space, and the product of the matrices approximates the original data. Here was use singular value decomposition (SVD) to perform matrix factorization on a subset of data consisting of randomly selected 10,000 playlists, and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
 ***
