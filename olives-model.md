@@ -4,7 +4,7 @@ notebook: olives-model.ipynb
 nav_include: 2
 ---
 
-# Table of Contents
+# Table of Contents Pineapple
 1. [Preddicting via SVM](#Predicting-via-SVM)
 2. [Allowing for crossovers](#Allowing-for-crossovers)
 
