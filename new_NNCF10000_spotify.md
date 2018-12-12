@@ -1,14 +1,14 @@
 ---
-title: NNCF Recommendation Systems
+title: Neural Collaborative Filtering
 notebook: NNCF_prediction.ipynb
 nav_include: 4
 ---
 
 ## Contents
-1. [Non Random NNCF Model](#Non-Random-NNCF)
-2. [Random NNCF Model](#Random-NNCF)
+1. [NNCF Model on Non-random Dataset](#Non-Random-NNCF)
+2. [NNCF Model on Random Dataset](#Random-NNCF)
 
-# Non Random NNCF Model <a name="Non-Random-NNCF"></a>
+# NNCF Model on Non-random Dataset<a name="Non-Random-NNCF"></a>
 ## Neural Collaborative Filtering (NNCF)
 ***
 Besides classical matrix factorization, we also implemented the neural network version of collaborative filtering: using deep network model to perform matrix factorization, as well as allowing extra playlist-track mixing.
@@ -247,7 +247,7 @@ model.summary()
     __________________________________________________________________________________________________
 
 
-## Spliting data
+## Split data
 ***
 We split 5% of the data from the whole dataset, and distributed the 5% equally into validation and test set. From the summary statistics, we can see that the matrix is really sparse: only ~0.1% of pair had class 1 labels.
 
@@ -800,9 +800,8 @@ print('auROC =', auroc_test_best)
 ***
 When we looked at the normalized confusion matrix, we found that this model gave higher sensitivity on class 1 samples but lower specificity on class 0 samples compared to the final model. Since the validation data was also sampled in a class-balance way, it is biased toward the balanced statistics. But when we trained the model for longer, it learned the closer-to-real statistics of the original data, so it did well on the test set with original class values. The area under ROC metric for both models were quite similar. We think that both models were fine. The final model might give better accuracy on predicting playlist-track contingency, but the model with lowest validation loss had higher "false positive rate", therefore would give us a more extended list of recommendation.
 
-# Random NNCF Model <a name="Random-NNCF"></a>
-## Neural Collaborative Filtering (NNCF)
-***
+# NNCF Model on Random Dataset <a name="Random-NNCF"></a>
+
 We applied the architecture of the NNCF model to the same subset of data consisting of randomly selected 10,000 playlists, training the network to perform binary classifcation on playlist-track pairs (predicting 0 vs. 1), and evaluated the model performance.
 
 ***
@@ -917,7 +916,7 @@ model.compile(optimizer='adam', loss= 'binary_crossentropy', metrics = ['accurac
 The architecture for this network is the same as the previous one.
 
 
-## Spliting data
+## Split data
 ***
 We split 5% of the data from the whole dataset, and distributed the 5% equally into validation and test set. From the summary statistics, we can see that the matrix is really sparse: only ~0.03% of pair had class 1 labels.
 
@@ -932,15 +931,8 @@ We split 5% of the data from the whole dataset, and distributed the 5% equally i
     proportion of ones in split sample = 0.00038136082762966724
 
 
-A trick here: We masked the splited data by setting the value to 2, and later excluded them during training process.
+We masked the splited data by setting the value to 2, and later excluded them during training process.
 
-
-
-
-
-
-    /Users/shihyitseng/anaconda3/lib/python3.6/site-packages/scipy/sparse/compressed.py:746: SparseEfficiencyWarning: Changing the sparsity structure of a csc_matrix is expensive. lil_matrix is more efficient.
-      SparseEfficiencyWarning)
 
 
 ## Define training data generator

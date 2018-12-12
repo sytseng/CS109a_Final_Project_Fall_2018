@@ -6,6 +6,7 @@ nav_include: 3
 ## Contents
 1. [SVD Model on Non-random Dataset](#Non-Random-SVD)
 2. [SVD Model on Random Dataset](#Random-SVD)
+3. [Visualization with tSNE Embedding](#tSNE)
 
 # SVD Model on Non-random Dataset <a name="Non-Random-SVD"></a>
 ## Matrix factorization and song recommendation
@@ -534,8 +535,8 @@ with open('jaccard_latent_factors_SVD.pkl','wb') as f2:
 
 
 # SVD Model on Random Dataset <a name="Random-SVD"></a>
-## Matrix factorization and song recommendation
-***
+
+
 Here we applied SVD on a subset of data consisting of randomly selected 10,000 playlists, and made song recommendation based on the reconstructed matrix. The quality of recommendation was then judged by the Jaccard index between recommended songs and existing songs in a given playlist.
 
 
@@ -738,7 +739,7 @@ As we increased the number of latent factors, the mean Jaccard index between the
 ![png](SVD_recommendation_rand_files/SVD_recommendation_rand_20_0.png)
 
 
-## Extra visualization: tracks in tSNE embedding
+# Extra visualization: tracks in tSNE embedding<a name="tSNE"></a>
 ***
 We can play with the data a little bit more by visualizing the tracks in SVD latent space using tSNE in 2D. We first performed SVD with 100 components.
 
