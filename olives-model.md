@@ -4,9 +4,9 @@ notebook: olives-model.ipynb
 nav_include: 2
 ---
 
-## Contents
-[TOC]
-# Header 1
+# Table of Contents
+1. [Preddicting via SVM](#Predicting-via-SVM)
+2. [Allowing for crossovers](#Allowing-for-crossovers)
 
 
 
