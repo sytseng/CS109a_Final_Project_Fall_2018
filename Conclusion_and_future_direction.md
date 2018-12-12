@@ -1,5 +1,5 @@
 ---
-title: Literature Review
+title: Conclusion and Future Directions
 notebook: Conclusion_and_future_direction.ipynb
 nav_include: 7
 ---
