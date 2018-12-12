@@ -1,13 +1,14 @@
 ---
-title: Song Recommendation Example
+title: A Real Example
 notebook: Real_example_song_recommendation_with_NNCF.ipynb
 nav_include: 7
 ---
 
-# Song recommendation in action
+## Song recommendation in action
 ***
 Here we demonstrated an example of song recommendation using NNCF model.
-***
+
+
 ### Load libraries
 
 
@@ -75,49 +76,6 @@ n_tracks, n_playlists = sps_acc.shape[0], sps_acc.shape[1]
 ```
 
 
-### Pull out function for recommendation
-
-
-
-```python
-# this function returns the indices and scores for recommeded tracks given a playlist_id
-def recommend_tracks(sps_acc, playlist_ind, model):
-    pairs = [np.ones((n_tracks,))*playlist_ind, np.arange(n_tracks)]
-
-    # make prediction with the model
-    prob = model.predict(pairs)
-    pred_class = prob.argmax(axis=-1)
-
-    # extract real class label from original data
-    real_class = np.array(sps_acc[:,playlist_ind].toarray()).reshape(-1,)
-
-    # real tracks: real class one
-    real_one_ind = np.argwhere(real_class).reshape(-1,)
-
-    # recommended tracks: predicted class one but real class zero
-    recom = np.logical_and(pred_class == 1, real_class == 0)
-
-    # find recommeded track index and score of being one
-    recom_ind = np.argwhere(recom).reshape(-1,)
-    recom_prob = prob[recom_ind,1]
-
-    # sort recommended indices from highest score to lowest
-    recom_sort_ind = np.argsort(recom_prob)
-    recom_ind = recom_ind[recom_sort_ind[::-1]]
-
-    # not-recommended tracks: predicted class zero and real class zero
-    not_recom = np.logical_and(pred_class == 0, real_class == 0)
-
-    # find not-recommeded track index and score of being zero
-    not_recom_ind = np.argwhere(not_recom).reshape(-1,)
-    not_recom_prob = prob[not_recom_ind,0]
-
-    # sort not-recommended indices from highest score to lowest
-    not_recom_sort_ind = np.argsort(not_recom_prob)
-    not_recom_ind = not_recom_ind[not_recom_sort_ind[::-1]]
-
-    return recom_ind, not_recom_ind, real_one_ind
-```
 
 
 ## Make song recommendations to a popular playlist
@@ -527,6 +485,4 @@ display(pd.read_sql_query(query, conn))
 
 
 
-```python
-conn.close()
-```
+

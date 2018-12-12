@@ -1,13 +1,13 @@
 ---
-title: NNCF Predictions
+title: Song Recommendation with NNCF
 notebook: NNCF_prediction.ipynb
 nav_include: 5
 ---
 ## Contents
-1. [Non Random NNCF Predictions](#Non-Random-NNCF)
-2. [Random NNCF Predictions](#Random-NNCF)
+1. [NNCF Recommendation on Non-random Dataset](#Non-Random-NNCF)
+2. [NNCF Recommendation on Random Dataset](#Random-NNCF)
 
-# Non Random NNCF Predictions <a name="Non-Random-NNCF"></a>
+# NNCF Recommendation on Non-random Dataset <a name="Non-Random-NNCF"></a>
 ## **Making Song Recommendation with Neural Collaborative Filtering**
 
 ***
@@ -136,56 +136,6 @@ def recommend_tracks(sps_acc, playlist_ind, model):
 
 
 
-
-```python
-# this function return jaccard index between a pair of tracks
-def get_jaccard(sps_acc, pair):
-    pair = list(pair)
-    track1 = pair[0]
-    track2 = pair[1]
-
-    mem = np.array(sps_acc[pair,:].toarray())
-
-    mem1 = np.argwhere(mem[0,:]).reshape(-1,)
-    mem2 = np.argwhere(mem[1,:]).reshape(-1,)
-
-    intersect = list(set(mem1) & set(mem2))
-    union = list(set(mem1) | set(mem2))
-    jaccard = len(intersect)/len(union)
-
-    return jaccard
-```
-
-
-
-
-```python
-# this function creates a subset of unique pair of a given list of tracks
-def create_unique_pair_subset(track_list, num):
-    track_list = list(track_list)
-    track_pairs = [(track1, track2) for i, track1 in enumerate(track_list)
-               for j, track2 in enumerate(track_list) if i<j]
-    total_num = len(track_pairs)
-    if total_num > num:
-        sub_ind = list(np.random.choice(total_num, num, replace=False))
-        track_pair_subset = [pair for idx, pair in enumerate(track_pairs) if idx in sub_ind]
-    else:
-        track_pair_subset = track_pairs
-
-    return track_pair_subset
-```
-
-
-
-
-```python
-# this function creates all pairs between 2 given lists of tracks
-def create_pairs_btw_lists(track_list1, track_list2):
-    track_list1 = list(track_list1)
-    track_list2 = list(track_list2)
-    track_pairs = [(track1, track2) for track1 in track_list1 for track2 in track_list2]
-    return track_pairs
-```
 
 
 ## Make recommendation for one playlist
@@ -398,16 +348,11 @@ with open('playlist_id_100_for_jaccard_NNCF10000_new.pkl','wb') as f1:
     pickle.dump(playlist_subset, f1)
 ```
 
-# Random NNCF Predictions <a name="Random-NNCF"></a>
-## **Making Song Recommendation with Neural Collaborative Filtering**
+# NNCF Recommendation on Random Dataset <a name="Random-NNCF"></a>
 
-***
-With the neural network collaborative filtering (NNCF), we are able to make song recommendation for existing playlists. Here we are using the NNCF model subset of 10,000 playlists genereated with a seed track (a popular song that belongs to >10,000 playlists) and demonstrate how we recommend new songs to those existing playlists.
-<br/><br/>
-The idea is to choose the songs that have the highest scores predicted by the network when paired with a specific playlist. We can then compute the Jaccard index of recommended songs and existing songs, and compare it to the Jaccard index between existing songs, and that between not-recommended songs and exisiting songs. A good recommendation would have a high Jaccard index (comparable to Jaccard index between existing songs).
+Here we used the NNMF trained on the random 10,000 playlists dataset to make song recommendation. 
 
-***
-First we load all the libraries.
+
 
 ## Load data and model
 
@@ -433,18 +378,6 @@ sps_acc
     	with 657056 stored elements in Compressed Sparse Column format>
 
 
-
-## Define functions
-***
-Then we define several functions.
-
-- ***recommend_tracks***
-This function makes recommendation of tracks that are not currently in a specific playlist. It returns the list of tracks that were predicted by the network as class 1 but have real label class 0, sorted by the score.
-
-- ***get_jaccard***
-This function calculated the Jaccard index between a pair of tracks.
-
-- ***create_unique_pair_subset*** and ***create_pairs_btw_lists*** help creating pairs of tracks from given lists.
 
 ## Make recommendation for one playlist
 ***
