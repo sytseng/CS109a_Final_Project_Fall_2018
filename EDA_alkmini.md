@@ -1,14 +1,14 @@
 ---
-title: EDA
+title: Exploratory Data Analysis
 notebook: EDA_alkmini.ipynb
 nav_include: 0
 ---
 
 
-# SQLite database for data hosting
+# SQLite database for data hosting and EDA
 ***
-In this project, we used the Million Playlists Dataset from Spotify website. They were stored in a bundle of json files of Python dictionaries which had information about individual playlists and all tracks that each playlists contained. To organize the data in a form that was easy to work with, we built a SQLite database and registered information about playlists and tracks into tables.
-***
+In this project, we used the Million Playlists Dataset from Spotify website. They were stored in a bundle of json files of Python dictionaries which had information about individual playlists and all tracks that each playlists contained. To organize the data in a form that was easy to work with, we built a SQLite database and registered information about playlists and tracks into tables. We then used Spotify API to get asccess to various audio features of song tracks.
+
 ## Load libraries
 
 
@@ -258,11 +258,11 @@ for file_ind, filepath in enumerate(playlist_path_sub):
 ```
 
 
-# Visualization of tables and EDA
+## Visualization of tables 
 ***
 After registering the data, we can take a look at the tables and simple statistics of them.
 
-## Tracks table
+### Tracks table
 ***
 Here is how the tracks table look like:
 
@@ -516,7 +516,7 @@ plt.title('Distribution of number of playlist membership of tracks', fontsize = 
 ![png](Building_SQLite_database_files/Building_SQLite_database_19_1.png)
 
 
-## Playlists table
+### Playlists table
 ***
 This is our playlists table. The Spotify uri's for all tracks that each playlist contained were stored in the table.
 
@@ -718,41 +718,23 @@ plt.title('Distribution of number of tracks in playlists', fontsize = 15);
 
 We can kind of get a sense here that this dataset is very sparse. We had a huge number of playlists and tracks, but the chance that one playlist contained one particular track was pretty low.
 
-## Closing cursor and disconnecting database
 
 
 
-```python
-# close cursor and connection
-cur.close()
-conn.close()
-```
 
+## Exploration of the Spotify API data - Audio features
 
-```python
-import sys, os
-import sqlite3
-import pandas as pd
-import json
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-%matplotlib inline
+For every track with Spotify uri, we can query a set of audio features from Spotify API. In order to understand the audio features, we can look at the distribution of the data.
 
-```
+***
 
-
-## Exploration of the Spotify API data - audio features
-
-In order to understand the audio features, we can look at the distribution of the data provided by the Spotify API.
+First we set up the connection to Spotify API:
 
 ```python
 # Access spotify
 import spotipy as sp
 import spotipy.oauth2 as oauth2
-import sqlite3
-import pandas as pd
+
 
 # set up authorization token
 credentials = oauth2.SpotifyClientCredentials(
@@ -765,18 +747,18 @@ spotify = sp.Spotify(auth=token)
 
 
 
+Then we selected some tracks from the table.
 
 ```python
-# Explore 500 tracks
-
+# Explore 2000 tracks
 N = 2000
-
 audio_feat_tracks = pd.read_sql_query("SELECT * from tracks ORDER BY RANDOM() LIMIT {};".format(N), conn)
 
 ```
 
 
 
+Query audio features from the API.
 
 ```python
 # Take track IDs in order to access the API
@@ -830,26 +812,13 @@ for track_id in ids:
 ```
 
 
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
 
 
-
+### Visualize distribution of audio features
+***
 
 ```python
 # Plot distributions
-
 N_features = len(feature_names)
 
 fig, ax = plt.subplots(ncols = 2, nrows = N_features//2+1, figsize = (14,25))

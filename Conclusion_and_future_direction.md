@@ -4,7 +4,7 @@ notebook: Conclusion_and_future_direction.ipynb
 nav_include: 8
 ---
 
-# Conclusion and future direction
+
 
 In this project, we worked on the Million Playlists Dataset and audio features of tracks from Spotify API to implement song recommender systems. We approached this goal using to different ways: ***content-based*** and ***collaborative filerting***.
 
