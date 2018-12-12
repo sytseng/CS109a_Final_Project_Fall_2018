@@ -5,6 +5,8 @@ nav_include: 2
 ---
 
 ## Contents
+{:.no_toc}
+*
 {: toc}
 
 
@@ -279,7 +281,7 @@ dfsouth.head()
 
 
 
-## Pineapple
+## Predicting via SVM
 
 
 
