@@ -756,8 +756,8 @@ import pandas as pd
 
 # set up authorization token
 credentials = oauth2.SpotifyClientCredentials(
-        client_id='153369a05314402294db1a574caaff2a',
-        client_secret='c6fff0923a0c44c5851fc4415038e8fa')
+        client_id='CLIENT_ID',
+        client_secret='CLIENT_SECRET')
 
 token = credentials.get_access_token()
 spotify = sp.Spotify(auth=token)
