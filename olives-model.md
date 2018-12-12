@@ -13,7 +13,7 @@ nav_include: 2
 
 
 ```python
-#!pip install seaborn
+#!pip install seabornpineapple
 %matplotlib inline
 import numpy as np
 import matplotlib.pyplot as plt
