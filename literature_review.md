@@ -33,7 +33,7 @@ To find F features, the two matrices that will be created from M are Q and R, wi
 
 ### Single Value Decomposition
 
-If we're looking to decompose an $m x n$ matrix M, then through SVD it will be decomposed into 3 different matrices, as M = U S V*, where:
+If we're looking to decompose an $m \times n$ matrix M, then through SVD it will be decomposed into 3 different matrices, as M = U S V*, where:
 
 1)  U : m x m unitary matrix, whose columns are called the **left singular vectors** of matrix M, and a set of orthonormal eigenvectors of **MM*** (where M*: conjugate transpose of the M)
 2) S : m x n diagonal matrix with non-negative cells, whose diagonal values are known as the **singular values** of M, and also the square roots of the non-zero eigenvalues of both **M∗ M** and **MM∗**.
