@@ -1,23 +1,9 @@
 ---
-title: Content Based Analysis
+title: Content-Based Analysis
 notebook: Jaccard_index_1000.ipynb
 nav_include: 2
 ---
 
-
-```python
-import sys, os
-import sqlite3
-import pandas as pd
-import json
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-%matplotlib inline
-
-from math import factorial as fact
-```
 ## Contents
 1. [Jaccard Index](#jaccard)
 2. [Making Song Recommendation with k-NN clustering](#k-means)
@@ -31,6 +17,16 @@ In this part of the EDA, we will explore the importance of the Jaccard index as 
 
 Before doing so, we have to connect to the database we have already created.
 
+```python
+import sqlite3
+import pandas as pd
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+from math import factorial as fact
+```
 
 
 ```python
