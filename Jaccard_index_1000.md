@@ -1,7 +1,7 @@
 ---
 title: Content Based Analysis
 notebook: Jaccard_index_1000.ipynb
-nav_include: 1
+nav_include: 2
 ---
 
 

@@ -1,6 +1,6 @@
 ---
 title: Literature Review
-nav_include: 2
+nav_include: 1
 ---
 
 # Literature Review, Concepts and Resources
@@ -36,8 +36,8 @@ To find $F$ features, the two matrices that will be created from $M$ are $Q$ and
 If we're looking to decompose an $m \times n$ matrix $M$, then through SVD it will be decomposed into 3 different matrices, as $M = U S V^{H}$, where:
 
 1)  $U$ : $m \times n$ unitary matrix, whose columns are called the **left singular vectors** of matrix $M$, and a set of orthonormal eigenvectors of **$MM^{H}$** (where $M^{H}$: conjugate transpose of the $M$)
-2) $S$ : $m \times n$ diagonal matrix with non-negative cells, whose diagonal values are known as the **singular values** of $M$, and also the square roots of the non-zero eigenvalues of both **M^{H} M** and **MM^{H}**.
-3) $V$: $n \times n$ unitary matrix, whose columns are the **right singular vectors** of $M$, and orthonormal eigenvector of **M^{H} M**.
+2) $S$ : $m \times n$ diagonal matrix with non-negative cells, whose diagonal values are known as the **singular values** of $M$, and also the square roots of the non-zero eigenvalues of both **$M^{H} M$** and **$MM^{H}$**.
+3) $V$: $n \times n$ unitary matrix, whose columns are the **right singular vectors** of $M$, and orthonormal eigenvector of **$M^{H} M$**.
 
 More information about SVD and its applications on Filtering can be found in the following paper:
 *Vozalis, Manolis G., and Konstantinos G. Margaritis. "Applying SVD on Generalized Item-based Filtering." IJCSA 3.3 (2006): 27-51.*
