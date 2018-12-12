@@ -1,7 +1,7 @@
 ---
-title: SVD Recommendation Systems
+title: Matrix Factorization
 notebook: SVD_recommendation_rand.ipynb
-nav_include: 2
+nav_include: 3
 ---
 ## Contents
 1. [Non Random SVD Model](#Non-Random-SVD)
