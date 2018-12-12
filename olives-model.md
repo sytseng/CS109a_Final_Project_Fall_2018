@@ -4,16 +4,14 @@ notebook: olives-model.ipynb
 nav_include: 2
 ---
 
-## Contents Pineapple
-{:.no_toc}
-*
-{: toc}
+## Contents
+[TOC]
 
 
 
 
 ```python
-#!pip install seabornpineapple
+#!pip install seaborn
 %matplotlib inline
 import numpy as np
 import matplotlib.pyplot as plt
