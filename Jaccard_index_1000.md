@@ -5,17 +5,18 @@ nav_include: 2
 ---
 
 ## Contents
-1. [Jaccard Index](#jaccard)
-2. [Making Song Recommendation with k-NN clustering](#k-means)
+1. [Jaccard Index and Audio Features](#jaccard)
+2. [Making Song Recommendation with k-NN Clustering](#k-means)
 
 
-# Jaccard Index<a name="jaccard"></a>
+# Jaccard Index and Audio Features<a name="jaccard"></a>
 ## Exploration of the Jaccard Index
 
-In this part of the EDA, we will explore the importance of the Jaccard index as an indicator of similarity among songs.
+In this part of the analysis, we explored the statistics of Jaccard index of the tracks in the dataset, and showed the importance of the Jaccard index as an indicator of similarity among songs.
 
+***
 
-Before doing so, we have to connect to the database we have already created.
+First we import libraries and connect to the database.
 
 ```python
 import sqlite3
@@ -712,24 +713,6 @@ for track_id in EDA_ids:
 ```
 
 
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-    retrying ...1secs
-
-
-
 
 ```python
 # Create a dict, in order to make a pandas DataFrame
@@ -919,7 +902,7 @@ Xtrain, Xtest, ytrain, ytest = train_test_split(X_vars,response,test_size=0.2)
 
 
 
-# Random Forest Regression using OOB (lab 9)
+# Random Forest Regression using OOB 
 
 In order to do the regression, we can start with a random forest.
 
@@ -1072,14 +1055,8 @@ This is stillnot a satisfactory accuracy score, which shows the need for both a 
 
 
 
-```python
-# note! always close the connection at the end
-cur.close()
-conn.close()
-```
 
-
-# Making Song Recommendation with k-NN clustering <a name="k-means"></a>
+# Making Song Recommendation with k-NN Clustering <a name="k-means"></a>
 
 
 ## Discovering similarities across Spotify tracks using clustering and audio features
@@ -2830,10 +2807,3 @@ train_tracks
 </div>
 
 
-
-
-
-```python
-# note! always close the connection at the end
-conn.close()
-```
