@@ -1,7 +1,7 @@
 ## Introduction to Data Science (CS109a) Final Project Fall 2018
 This is a clone of the final project of Harvard CS109a - Introduction to Data Science. The original repository can be found [here](https://github.com/lmcorrigan0/testgpages).
 
-## Team member
+## Team Members
 * Liam Corrigan
 * Shih-Yi Tseng
 * Andra Fehmiu
